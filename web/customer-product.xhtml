@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head></h:head>
+
+<h:body>
+    <h:form id="form">
+        <p:dataTable id="customerDataTable" var="customer" value="#{customerProductView.customers}"
+                     widgetVar="customersTable">
+            <p:ajax event="rowToggle" listener="#{customerProductView.onRowToggle}"
+                    update=":form:customerDataTable:orderProductDetailTable"/>
+            <f:facet name="header">
+                Customers
+            </f:facet>
+            <p:column style="width:16px">
+                <p:rowToggler/>
+            </p:column>
+
+            <p:column headerText="Customer Number">
+                <h:outputText value="#{customer.number}"/>
+            </p:column>
+
+            <p:column filterBy="#{customer.name}" headerText="Customer Name" filterMatchMode="contains">
+                <h:outputText value="#{customer.name}"/>
+            </p:column>
+
+            <p:column headerText="Contact Last Name">
+                <h:outputText value="#{customer.contactLastName}"/>
+            </p:column>
+
+            <p:column headerText="Contact First Name">
+                <h:outputText value="#{customer.contactFirstName}"/>
+            </p:column>
+
+            <p:rowExpansion>
+                <p:dataTable id="orderProductDetailTable"
+                             var="orderProductDetail"
+                             value="#{customerProductView.orderProductDetails}" rows="10"
+                             paginator="true"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15">
+                    <p:column headerText="Order Number">
+                        <h:outputText value="#{orderProductDetail.orderNumber}"/>
+                    </p:column>
+
+                    <p:column headerText="Order Lie Number">
+                        <h:outputText value="#{orderProductDetail.orderLineNumber}"/>
+                    </p:column>
+
+                    <p:column headerText="Order Date">
+                        <h:outputText value="#{orderProductDetail.orderDate}"/>
+                    </p:column>
+
+                    <p:column headerText="Required Date">
+                        <h:outputText value="#{orderProductDetail.requiredDate}"/>
+                    </p:column>
+
+                    <p:column headerText="Shipped Date">
+                        <h:outputText value="#{orderProductDetail.shippedDate}"/>
+                    </p:column>
+
+                    <p:column headerText="Order Status">
+                        <h:outputText value="#{orderProductDetail.orderStatus}"/>
+                    </p:column>
+
+                    <p:column headerText="Comments">
+                        <h:outputText value="#{orderProductDetail.comments}"/>
+                    </p:column>
+
+                    <p:column headerText="Ordered Quantity">
+                        <h:outputText value="#{orderProductDetail.orderedQuantity}"/>
+                    </p:column>
+
+                    <p:column headerText="Price Per Unit">
+                        <h:outputText value="#{orderProductDetail.pricePerUnit}"/>
+                    </p:column>
+
+                    <p:column headerText="Product Name">
+                        <h:outputText value="#{orderProductDetail.productName}"/>
+                    </p:column>
+
+                    <p:column headerText="Product Scale">
+                        <h:outputText value="#{orderProductDetail.productScale}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:rowExpansion>
+        </p:dataTable>
+    </h:form>
+</h:body>
+</html>
